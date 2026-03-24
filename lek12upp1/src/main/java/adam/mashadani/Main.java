@@ -31,6 +31,8 @@ public class Main {
             ArrayList<Person> fhjälpen = gson.fromJson(fhjälpen_json, personListType);
             ArrayList<Person> medlemmar = gson.fromJson(medlemmar_json, personListType);
 
+            //Uppgift A
+
             HashSet<Person> medlemmar_set = new HashSet<>(medlemmar);
             HashSet<Person> fhjälpen_set = new HashSet<>(fhjälpen);
 
@@ -42,6 +44,26 @@ public class Main {
             for (Person i : besökandeFhjälpen) {
                 System.out.println(i.namn);
             }
+
+            //Uppgift B
+
+            HashSet<Person> besökare_set = new HashSet<Person>(besökande);
+            HashSet<Person> avstängda_set = new HashSet<Person>(avstängda);
+
+            besökare_set.removeAll(avstängda_set);
+
+            ArrayList<Person> icke_avstängda_besökare = new ArrayList<>(besökare_set);
+
+            System.out.println(icke_avstängda_besökare.size() + " ska delta:");
+
+            for (Person i : icke_avstängda_besökare) {
+                System.out.println(i.namn);
+            }
+
+            String deltagare_json = gson.toJson(icke_avstängda_besökare);
+
+            Files.writeString(Paths.get("deltagare.json"), deltagare_json);
+
 
         } catch (IOException e) {
             e.printStackTrace();
